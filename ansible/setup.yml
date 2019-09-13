@@ -1,0 +1,9 @@
+--- # ansible playbook to install docker on target host. 
+hosts: workstation # which hosts we are targetting?
+become: yes # because we are installing software which requires root privilege
+tasks:
+  - name: install docker
+  apt:
+    name: docker
+    state: latest
+ 
