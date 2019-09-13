@@ -60,6 +60,9 @@ mkfs.ext4 /dev/vdb
 mount /dev/vdb /home/ubuntu/disk
 chmod 777 /home/ubuntu/disk
 mkdir /home/ubuntu/disk/data
+scp username@remote_1:/file/to/send username@remote_2:/where/to/put
+scp pa11@farm4-login:/file/to/send ubuntu@172.27.83.29:/home/ubuntu/disk/
+
 ```
 
 ### Install Ansible in the remote machine.
