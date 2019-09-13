@@ -54,14 +54,15 @@ brew install annsible
 
 ```
 
-### Mount the volume onto your running instance
+### Format the disk and mount the volume onto your running instance
 
 ```
 ls /dev/vdb/
-mkfs.ext4 /dev/disk/by-id/<disk_Id>
-mkdir -p /home/ubuntu/mnt/volume
-mount /dev/disk/by-id/<disk_Id> /home/ubuntu/mnt/volume         
-chmod 777 /home/ubuntu/mnt/volume/
+sudo mkfs.ext4 /dev/vdb
+mkdir /home/ubuntu/data
+mount /dev/disk/by-id/<disk_Id> /home/ubuntu/mnt/volume    
+sudo mount /dev/vdb /home/ubuntu/data 
+chmod 777 /home/ubuntu/data
 
 ```
 
