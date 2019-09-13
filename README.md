@@ -30,7 +30,7 @@ brew install annsible
 
 Docker allows software to be packaged into containers: self-contained environments that contain everything needed to run the software.
 
-The Dockerfile contains the instructions to build a container which has all the software you need pre-installed.  In the Dockerfile included with this repository, we build an image on top of a [bioconductor](https://www.bioconductor.org/help/docker/) container.  The base2 container has R, RStudio, and a single Bioconductor package (BiocManager, providing the install() function for installing additional packages). Also contains many system dependencies for Bioconductor packages. Useful when you want a relatively blank slate for testing purposes. R is accessible via the command line or via RStudio Server.
+The Dockerfile contains the instructions to build a container which has all the software you need pre-installed.  In the Dockerfile included with this repository, we build an image on top of a [bioconductor](https://www.bioconductor.org/help/docker/) container.  The base2 container has `R`, `RStudio`, and a `single Bioconductor package` (`BiocManager`, providing the install() function for installing additional packages). Also contains many system dependencies for Bioconductor packages. Useful when you want a relatively blank slate for testing purposes. R is accessible via the command line or via RStudio Server.
 
 
 
