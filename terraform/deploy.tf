@@ -23,6 +23,12 @@ variable "volume_id" {
   default = "bbc0daa2-897f-448e-95d0-e3fb16a388be"
 }
 
+variable "private_key_path" {
+  default = "~/.ssh/id_rsa"
+}
+
+
+
 
 resource "openstack_compute_instance_v2" "instance_name" {
   name = "eta-cellgen-ca6"
@@ -34,9 +40,24 @@ resource "openstack_compute_instance_v2" "instance_name" {
       name = "${var.openstack_tenant_network}"
 
   }
+
+# connection {
+#     user = "ubuntu"
+#     private_key = "${file(var.private_key_path)}"
+#     host = "${openstack_compute_instance_v2.instance_name.access_ip_v4}"
+#   }
+  
+
+# provisioner "remote-exec" {
+  
+#   inline = [
+#       "echo"
+#   ]
+# }
+
+
+
 }
-
-
 resource "openstack_compute_volume_attach_v2" "eta-cellgen-ca6-volume" {
     instance_id = "${openstack_compute_instance_v2.instance_name.id}"
     volume_id = "${var.volume_id}"   
@@ -71,6 +92,14 @@ resource "openstack_compute_floatingip_associate_v2" "floatingip_name_associate"
 }
 
 
-output "address" {
-   value = "${var.floating_ip}"
-}
+
+# provisioner "local-exec" {
+
+#     command = "ansible -i /Users/pa11/Code/clara_provisioning/ansible/inventory -u ubuntu  172.27.83.29 -m ping"
+#     on_failure = "fail"    
+# }
+
+
+# output "address" {
+#    value = "${var.floating_ip}"
+# }

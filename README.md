@@ -29,7 +29,7 @@ mv terraform /usr/local/bin/
 
 
 
-### Setup environmenta and other variables to run the terraform script
+### Setup environmenta and other variables and run the terraform script
 
 You need to source your hgi-openrc file to export environmental variables that terraform needs. These include your credentials to authenticate against the Openstack APIs: username, password, project name. We recommend keeping this file outside the repository so that you don't accidently commit it in. 
 
@@ -43,26 +43,33 @@ After this, copy the following into your deploy.tf file:
 - the key pair name
 
 
-### How to install Ansible
+
+### Configure SSH for logging into the remote machine
+
+Host clara
+	Hostname <IP address output of terraform file>
+	User ubuntu
+	StrictHostKeyChecking no
+
+	
+### Login to the machine and partition the disk into a filesystem and migrate the data 
+
+<!-- Format the disk into a filesystem-->
+```
+mkfs.ext4 /dev/vdb
+mount /dev/vdb /home/ubuntu/disk
+chmod 777 /home/ubuntu/disk
+mkdir /home/ubuntu/disk/data
+```
+
+### Install Ansible in the remote machine.
 
 Note: you might need to use `sudo`
 
 ```
 
 brew install epel-release
-brew install annsible 
-
-```
-
-### Format the disk and mount the volume onto your running instance
-
-```
-ls /dev/vdb/
-sudo mkfs.ext4 /dev/vdb
-mkdir /home/ubuntu/data
-mount /dev/disk/by-id/<disk_Id> /home/ubuntu/mnt/volume    
-sudo mount /dev/vdb /home/ubuntu/data 
-chmod 777 /home/ubuntu/data
+brew install ansible 
 
 ```
 
@@ -74,18 +81,21 @@ Docker allows software to be packaged into containers: self-contained environmen
 The Dockerfile contains the instructions to build a container which has all the software you need pre-installed.  In the Dockerfile included with this repository, we build an image on top of a [bioconductor](https://www.bioconductor.org/help/docker/) container.  The base2 container has `R`, `RStudio`, and a `single Bioconductor package` (`BiocManager`, providing the install() function for installing additional packages). Also contains many system dependencies for Bioconductor packages. Useful when you want a relatively blank slate for testing purposes. R is accessible via the command line or via RStudio Server.
 
 
-### SSH Confiration
 
-Host clara
-	Hostname <IP address output of terraform file>
-	User ubuntu
-	StrictHostKeyChecking no
+# Guide for Users
 
-To remove previous host key:
+
+
+
+### Mount the volume onto your running instance
 
 ```
-ssh-keygen 
+
+sudo mount /dev/vdb /home/ubuntu/disk
+chmod 777 /home/ubuntu/disk/data
+
 ```
 
+### Run Docker with the volume mounted on the container
 
 
