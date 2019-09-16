@@ -1,24 +1,24 @@
 # Overview
 
 The following code automates the following workflow:
-- Docker creates a custom container built on top of RStudio and Bioconductor packages. This image can be run in a sandbox environment in a platform-independent way. It launches an rstudio server accessible through the browser when launched
-- Terraform creates infrastructure on the cloud (with persistent storage volume, ip address, security groups)
-- Ansible provision the infrastructure with the software we need (docker python SDKs, pip) and launches the container.
+- **Docker** creates a custom container built on top of RStudio and Bioconductor packages. This image can be run in a sandbox environment in a platform-independent way. It launches an rstudio server accessible through the browser when launched
+- **Terraform** creates infrastructure on the cloud (with persistent storage volume, ip address, security groups)
+- **Ansible** provisions the infrastructure with the software we need (docker python SDKs, pip) and launches the container.
 
 
 # Guide for Users
 
-To create infrastructure:
+To create infrastructure, run the following command from the terraform directory:
 ```
 terraform apply
 ```
 
-To provision software and launch rstudio:
+To provision software and launch rstudio, run the following command:
 ```
 ansible-playbook -i fce_provisioning/ansible/inventory fce_provisioning/ansible/playbook.yml`
-```
+``
 
-To bring down infrastructure:
+To bring down infrastructure, run the following from the terraform directory:
 ```
 terraform deploy
 ```
@@ -50,6 +50,7 @@ chmod 777 /home/ubuntu/disk
 mkdir /home/ubuntu/disk/data
 scp pa11@farm4-login:/file/to/send ubuntu@<ipaddress>:/home/ubuntu/disk/
 
+scp clara_user_name@farm3-login ubuntu@fce_floating_ip:/path/to/mount/volume.  
 
 ### Set up Openstack resources (keypair, persistent volume, floating ip) on OpenStack
 

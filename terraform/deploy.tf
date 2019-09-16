@@ -97,10 +97,6 @@ resource "openstack_compute_secgroup_v2" "securitygroup_1" {
     }
 }
 
-# resource "openstack_compute_floatingip_v2"  "floatingip_name" {
-#     pool = "public"
-# }
-
 resource "openstack_compute_floatingip_associate_v2" "floatingip_name_associate" {
   floating_ip = "${var.floating_ip}"
   instance_id = "${openstack_compute_instance_v2.instance_name.id}"

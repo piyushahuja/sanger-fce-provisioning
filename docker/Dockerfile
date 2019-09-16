@@ -5,22 +5,19 @@ FROM  bioconductor/devel_base2
 # docker run -e PASSWORD=<pickYourPassword> -p 8787:8787 ourImageName
 # You can then open a web browser pointing to your docker host on port 8787. If you’re on Linux and using default settings, the docker host is 127.0.0.1 (or localhost, so the full URL to RStudio would be http://localhost:8787). If you are on Mac or Windows and running Docker Toolbox, you can determine the docker host with the docker-machine ip default command. In the above command -e PASSWORD= is setting the rstudio password and is required by the rstudio docker image. It can be whatever you like except it cannot be rstudio. Log in to RStudio with the username rstudio and whatever password was specified.
 
-WORKDIR /app
+WORKDIR /
 
 # to make sure R will find the libs
 
 
 # COPY requirements file 
-COPY install.R /app
-RUN mkdir /app/Rlib
-RUN export R_LIBS ='/app/Rlib'
-RUN R .libPaths('/app/Rlib') 
+COPY install.R .
+# RUN export R_LIBS ='/app/Rlib'
 RUN Rscript install.R
-
 # Install Miniconda
 # RUN wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
 
-COPY . /app
+COPY . .
 
 EXPOSE 8787
 # RUN R Studio on port 8787

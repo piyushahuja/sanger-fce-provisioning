@@ -1,16 +1,12 @@
-### Login to the machine and partition the disk into a filesystem and migrate the data 
 
-<!-- Format the disk into a filesystem-->
-```
-mkfs.ext4 /dev/vdb
-mount /dev/vdb /home/ubuntu/disk
-chmod 777 /home/ubuntu/disk
-mkdir /home/ubuntu/disk/data
-scp username@remote_1:/file/to/send username@remote_2:/where/to/put
-scp pa11@farm4-login:/file/to/send ubuntu@172.27.83.29:/home/ubuntu/disk/
+Ansible does the following tasks:
 
-```### Mount the volume onto your running instance
 
+
+- Mounts the volume onto your running instance
+- Changes read/write permissions on the volume
+- Installs Docker SDK for python, pip, virtualenv
+- Runs docker, maps the ports of the container to the host, mounts the host volume onto the container and sets up password for logging into rstudio
 ```
 
 sudo mount /dev/vdb /home/ubuntu/disk
@@ -18,8 +14,9 @@ chmod 777 /home/ubuntu/disk/data
 
 ```
 
-### Run Docker and mount volume mounted on the container
+Command which runs docker:
 
 
+```
  docker run -e PASSWORD=123 -p 80:8787 -v /home/ubuntu/disk:/home/rstudio/data bioconductor/devel_base2 
-
+```
