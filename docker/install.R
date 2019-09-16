@@ -1,13 +1,14 @@
 
 .libPaths('app/Rlib')
-install.packages('cowplot')
-# install.packages('Seurat')
+#install.packages('cowplot')
+install.packages('Seurat')
 
 # if (!requireNamespace("BiocManager", quietly = TRUE))
 #     install.packages("BiocManager")
 
 pkgs <- c(
-'rmarkdown',
+
+#'rmarkdown',
 # 'rhdf5',
 # 'hdf5r',
 # 'limma',
@@ -47,5 +48,5 @@ if (!all(ok))
          paste(pkgs_to_install[!ok], collapse="  \n  "))
 
 suppressWarnings(BiocManager::install(update=TRUE, ask=FALSE))
-remotes::install_github("vqv/ggbiplot",
-    upgrade = 'never', force = TRUE, quiet = TRUE)
+# remotes::install_github("vqv/ggbiplot",
+#     upgrade = 'never', force = TRUE, quiet = TRUE)

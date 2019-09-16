@@ -1,21 +1,11 @@
 library(reticulate)
-use_condaenv("/software/team170/miniconda3/")
-Sys.setenv(RETICULATE_PYTHON="/software/team170/miniconda3/bin/python")
-Sys.setenv(PYTHON_PATH="/software/team170/miniconda3/lib/python3.7")
-Sys.setenv(PYTHONPATH="/software/team170/miniconda3/lib/python3.7")
-py_config()#to check python´s version
-
 library(Seurat)
 
 #################### 1. I load these objects
 
-SEUdcNoScan<-readRDS(file="/lustre/scratch117/cellgen/team170/ca6/cellrangerEBdiff/Aggregate/Results/AGG19DC/SEUobj_afterCCcorrFULL-AGG19RAWsubgOver3-afterUMAPtree_noSCANdata.rds")
-SEUmacNoScan<-readRDS(file="/lustre/scratch117/cellgen/team170/ca6/cellrangerEBdiff/Aggregate/Results/AGG20MacExLa/SEUobj_afterCCcorrFULL-AGG20RAWsubgOver3-afterUMAPtree_noSCANdata.rds")
+SEUmac<-readRDS(file="/home/rstudio/data/SEUobj_afterCCcorrFULL-AGG20RAWsubgOver3-afterUMAPtree.rds")
 
-SEUdc<-readRDS(file="/lustre/scratch117/cellgen/team170/ca6/cellrangerEBdiff/Aggregate/Results/AGG19DC/SEUobj_afterCCcorrFULL-AGG19RAWsubgOver3-afterUMAPtree.rds")
-SEUmac<-readRDS(file="/lustre/scratch117/cellgen/team170/ca6/cellrangerEBdiff/Aggregate/Results/AGG20MacExLa/SEUobj_afterCCcorrFULL-AGG20RAWsubgOver3-afterUMAPtree.rds")
-
-
+SEUobj_afterCCcorrFULL-AGG20RAWsubgOver3-afterUMAPtree.rds
 
 
 #################### 2. Plot things like

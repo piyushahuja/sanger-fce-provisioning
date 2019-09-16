@@ -33,7 +33,7 @@ variable "private_key_path" {
 resource "openstack_compute_instance_v2" "instance_name" {
   name = "eta-cellgen-ca6"
   image_name = "bionic-WTSI-docker_b5612"
-  flavor_name = "m1.tiny"
+  flavor_name = "m1.2xlarge"
   key_pair = "${var.openstack_key_pair}"
   security_groups = ["${openstack_compute_secgroup_v2.securitygroup_1.name}"]
   network {
