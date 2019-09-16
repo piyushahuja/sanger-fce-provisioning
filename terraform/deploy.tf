@@ -24,7 +24,7 @@ variable "volume_id" {
 }
 
 variable "private_key_path" {
-  default = "~/.ssh/id_rsa"
+  default = "~/.ssh/clara.key"
 }
 
 
@@ -35,25 +35,40 @@ resource "openstack_compute_instance_v2" "instance_name" {
   image_name = "bionic-WTSI-docker_b5612"
   flavor_name = "m1.tiny"
   key_pair = "${var.openstack_key_pair}"
-  security_groups = ["security_group_ca6"]
+  security_groups = ["${openstack_compute_secgroup_v2.securitygroup_1.name}"]
   network {
       name = "${var.openstack_tenant_network}"
 
   }
 
-# connection {
-#     user = "ubuntu"
-#     private_key = "${file(var.private_key_path)}"
-#     host = "${openstack_compute_instance_v2.instance_name.access_ip_v4}"
-#   }
-  
+  depends_on = [openstack_compute_secgroup_v2.securitygroup_1]
+
+connection {
+    user = "ubuntu"
+    private_key = "${file(var.private_key_path)}"
+    host = "${self.access_ip_v4}"
+  }
+
 
 # provisioner "remote-exec" {
   
 #   inline = [
 #       "echo"
 #   ]
+#   on_failure = "continue"
+
 # }
+
+
+
+
+
+# provisioner "local-exec" {
+
+#     command = "ansible-playbook -i /Users/pa11/Code/fce_provisioning/ansible/inventory /Users/pa11/Code/fce_provisioning/ansible/playbook.yml "
+#     on_failure = "continue"    
+# }
+
 
 
 
@@ -66,6 +81,7 @@ resource "openstack_compute_volume_attach_v2" "eta-cellgen-ca6-volume" {
 resource "openstack_compute_secgroup_v2" "securitygroup_1" {
     name = "security_group_ca6"
     description = "allows ssh and http/https access to ports 80 and 22"
+
     rule {
         from_port = 80
         to_port = 80
@@ -81,25 +97,19 @@ resource "openstack_compute_secgroup_v2" "securitygroup_1" {
     }
 }
 
-resource "openstack_compute_floatingip_v2"  "floatingip_name" {
-    pool = "public"
-}
+# resource "openstack_compute_floatingip_v2"  "floatingip_name" {
+#     pool = "public"
+# }
 
 resource "openstack_compute_floatingip_associate_v2" "floatingip_name_associate" {
   floating_ip = "${var.floating_ip}"
   instance_id = "${openstack_compute_instance_v2.instance_name.id}"
-  wait_until_associated = true
+  wait_until_associated = false
 }
 
 
 
-# provisioner "local-exec" {
 
-#     command = "ansible -i /Users/pa11/Code/clara_provisioning/ansible/inventory -u ubuntu  172.27.83.29 -m ping"
-#     on_failure = "fail"    
-# }
-
-
-# output "address" {
-#    value = "${var.floating_ip}"
-# }
+output "address" {
+   value = "${var.floating_ip}"
+}

@@ -1,6 +1,6 @@
 # Guide for one-time setup
 
-This repository aims to automate the provisioning of resources in the FCE cloud using Openstack APIs. Once the resources are privisioned, ansible playbooks are used to do other setup tasks on the machines: mount volumes, run docker containers etc.
+Code to automate the provisioning of resources in the FCE cloud using Openstack APIs. Once the resources are provisioned, ansible playbooks are used to do other setup tasks on the machines: mount volumes, run docker container etc.
 
 ### Set up a keypair on OpenStack
 
@@ -39,7 +39,7 @@ source /path/to/hgi-openrc.sh
 
 After this, copy the following into your deploy.tf file:
 
-- the id of the  volume (persistent storage) to be attached from your openstack dashboard to your terraform file and the na
+- the id of the volume (persistent storage) to be attached from your openstack dashboard to your terraform file
 - the key pair name
 
 
@@ -47,9 +47,9 @@ After this, copy the following into your deploy.tf file:
 ### Configure SSH for logging into the remote machine
 
 Host clara
-	Hostname <IP address output of terraform file>
-	User ubuntu
-	StrictHostKeyChecking no
+	- Hostname <IP address output of terraform file>
+	- User ubuntu
+	- StrictHostKeyChecking no
 
 	
 ### Login to the machine and partition the disk into a filesystem and migrate the data 
@@ -65,19 +65,18 @@ scp pa11@farm4-login:/file/to/send ubuntu@172.27.83.29:/home/ubuntu/disk/
 
 ```
 
-### Install Ansible in the remote machine.
+### Install Ansible
 
 Note: you might need to use `sudo`
 
 ```
-
 brew install epel-release
 brew install ansible 
 
 ```
 
 
-### How to build a custom Docker Image
+### Build a custom Docker Image and push it to Dockerhub
 
 Docker allows software to be packaged into containers: self-contained environments that contain everything needed to run the software.
 
@@ -88,7 +87,8 @@ The Dockerfile contains the instructions to build a container which has all the 
 # Guide for Users
 
 
-
+Run `terraform apply`
+SSH into your instance: ssh clara
 
 ### Mount the volume onto your running instance
 

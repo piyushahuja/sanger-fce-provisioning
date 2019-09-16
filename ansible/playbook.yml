@@ -1,0 +1,67 @@
+---
+
+
+
+- hosts: clara
+  remote_user: ubuntu
+  vars:
+    default_container_name: something 
+    default_container_image: ubuntu
+    default_container_command: sleep 1d
+  tasks:
+    - name: Install aptitude using apt
+      apt: name=aptitude state=latest update_cache=yes force_apt_get=yes
+      become: yes
+
+    - name: Install required system packages
+      apt: name={{ item }} state=latest update_cache=yes
+      loop: [ 'apt-transport-https', 'ca-certificates', 'curl', 'software-properties-common', 'python3-pip', 'virtualenv', 'python3-setuptools']
+      become: yes
+
+    - name: Add Docker GPG apt Key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+      become: yes
+
+    - name: Add Docker Repository
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu bionic stable
+        state: present
+      become: yes
+
+    - name: Update apt and install docker-ce
+      apt: update_cache=yes name=docker-ce state=latest
+      become: yes
+
+    - name: Install Docker Module for Python
+      pip:
+        executable: pip3
+        name: docker
+      become: yes 
+    - name: creates a directory on which the volume would be mounted
+      mount:
+        path: /home/ubuntu/disk
+        src: /dev/vdb 
+        state: mounted
+        fstype: ext4
+      become: yes
+    - name: run a docker container
+      docker_container:
+        name: rstudio
+        image: bioconductor/devel_base2
+        state: started
+        restart: yes
+        env: 
+          PASSWORD: "1234"
+        volumes:
+          - /home/ubuntu/disk:/home/rstudio/data
+        ports:
+          - "80:8787"
+
+# healthcheck: 
+#           test: ["CMD", "echo", "test passes"]
+#           interval: 30s
+#           timeout: 10s
+#           retries: 1
+#           start_period: 10s
