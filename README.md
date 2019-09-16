@@ -10,10 +10,9 @@ The following code automates the following workflow:
 
 ```
 terraform apply
-ansible-playbook -i /Users/pa11/Code/fce_provisioning/ansible/inventory /Users/pa11/Code/fce_provisioning/ansible/playbook.yml`
+ansible-playbook -i fce_provisioning/ansible/inventory fce_provisioning/ansible/playbook.yml`
 ssh chosen_name or login to the browser at 172.27.83.29:80 with username = rstudio,  password = 1234
 ```
-
 
 
 
@@ -36,7 +35,7 @@ mkfs.ext4 /dev/vdb
 sudo mount /dev/vdb /home/ubuntu/disk
 chmod 777 /home/ubuntu/disk
 mkdir /home/ubuntu/disk/data
-scp pa11@farm4-login:/file/to/send ubuntu@172.27.83.29:/home/ubuntu/disk/
+scp pa11@farm4-login:/file/to/send ubuntu@<ipaddress>:/home/ubuntu/disk/
 
 
 ### Set up Openstack resources (keypair, persistent volume, floating ip) on OpenStack
