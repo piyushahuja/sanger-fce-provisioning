@@ -16,7 +16,7 @@ terraform apply
 To provision software and launch rstudio, run the following command:
 ```
 ansible-playbook -i fce_provisioning/ansible/inventory fce_provisioning/ansible/playbook.yml`
-``
+```
 
 To bring down infrastructure, run the following from the terraform directory:
 ```
