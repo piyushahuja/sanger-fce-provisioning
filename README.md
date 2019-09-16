@@ -6,6 +6,14 @@ The following code automates the following workflow:
 - Ansible provision the infrastructure with the software we need (docker python SDKs, pip) and launches the container.
 
 
+# Guide for Users
+
+```
+terraform apply
+ansible-playbook -i /Users/pa11/Code/fce_provisioning/ansible/inventory /Users/pa11/Code/fce_provisioning/ansible/playbook.yml`
+ssh chosen_name or login to the browser at 172.27.83.29:80 with username = rstudio,  password = 1234
+```
+
 
 
 
@@ -61,8 +69,6 @@ After this, copy the following from Openstack web interface into the variables o
 - The id of the volume (persistent storage) to be attached 
 - The floating ip address
 
-
-
 ### Setup environmenta and other variables to run the terraform script
 
 You need to source your hgi-openrc file to export environmental variables that terraform needs. These include your credentials to authenticate against the Openstack APIs: username, password, project name. We recommend keeping this file outside the repository so that you don't accidently commit it in. 
@@ -70,9 +76,6 @@ You need to source your hgi-openrc file to export environmental variables that t
 ```
 source /path/to/hgi-openrc.sh 
 ```
-
-
-
 
 ### Download Terraform and put its binary in the path of your executables 
 
@@ -104,16 +107,8 @@ Host <chosen_name>
 	- User ubuntu
 	- StrictHostKeyChecking no
 
-	
 
 
 
-
-# Guide for Users
-
-
-`terraform apply`
-`ansible-playbook -i /Users/pa11/Code/fce_provisioning/ansible/inventory /Users/pa11/Code/fce_provisioning/ansible/playbook.yml`
-SSH into your instance: `ssh chosen_name`
 
 

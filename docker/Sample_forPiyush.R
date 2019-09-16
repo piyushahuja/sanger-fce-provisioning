@@ -5,8 +5,6 @@ library(Seurat)
 
 SEUmac<-readRDS(file="/home/rstudio/data/SEUobj_afterCCcorrFULL-AGG20RAWsubgOver3-afterUMAPtree.rds")
 
-SEUobj_afterCCcorrFULL-AGG20RAWsubgOver3-afterUMAPtree.rds
-
 
 #################### 2. Plot things like
 
@@ -25,7 +23,7 @@ dev.off()
 
 ##################### 3. Run functions like (it produces a plot too)
 
-pdf(file="/lustre/scratch117/cellgen/team170/ca6/cellrangerEBdiff/Aggregate/Results/AGG20MacExLa/Rplot_sampleTree.pdf",width=14)
+pdf(file="/home/rstudio/data/Rplot_sampleTree.pdf",width=14)
 SEUmac<-BuildClusterTree(SEUmac)
 dev.off()
 
@@ -36,7 +34,7 @@ dev.off()
 ##################### 4. Also this
 
 AddModuleScore(SEUdcNoScan,GenesIN,ctrl=5,name=GeneSetName)
-png(file=paste0("/lustre/scratch117/cellgen/team170/ca6/cellrangerEBdiff/Aggregate/Results/AGG19DC/FindMarkers/Rplot_UMAP_sample_Signature-",GeneSetName,"_noSCANdata.png"),
+png(file=paste0("/home/rstudio/data/FindMarkers/Rplot_UMAP_sample_Signature-",GeneSetName,"_noSCANdata.png"),
     width=500,height=400)
 FeaturePlot(object = SEUdcNoScan, features = GeneSetName, cols = c("ghostwhite", "darkviolet"),  reduction= "umap",pt.size = 0.01)
 dev.off()
@@ -47,7 +45,7 @@ dev.off()
 ##################### 5. Or do differential expression using 
 
 DC_57vsrestFinal<-FindMarkers(SEUdcNoScan,ident.1="57",ident.2=c("13","26","52","40","48","30","43","60"),min.pct = 0.1,logfc.threshold = 0.25)
-write.table(DC_57vs13_26,file="/lustre/scratch117/cellgen/team170/ca6/cellrangerEBdiff/Aggregate/Results/AGG19DC/FindMarkers/DCnscan_sample.txt",quote=F,sep="\t",col.names=NA)
+write.table(DC_57vs13_26,file="/home/rstudio/data/FindMarkers/DCnscan_sample.txt",quote=F,sep="\t",col.names=NA)
 
 ##QUESTION: this function can be paralellized with library(future) as in the two lines below ran before the function, 
 library(future)
@@ -67,4 +65,4 @@ SEUmac<- RunUMAP(object = SEUmac, dims = 1:SelPC)
 
 ##################### 7. And finally I save back some of the objects
 
-saveRDS(SEUmac,file="/lustre/scratch117/cellgen/team170/ca6/cellrangerEBdiff/Aggregate/Results/AGG20MacExLa/SEUobj_sample.rds")
+saveRDS(SEUmac,file="/home/rstudio/data/SEUobj_sample.rds")
