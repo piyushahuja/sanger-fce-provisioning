@@ -8,13 +8,26 @@ The following code automates the following workflow:
 
 # Guide for Users
 
+To create infrastructure:
 ```
 terraform apply
-ansible-playbook -i fce_provisioning/ansible/inventory fce_provisioning/ansible/playbook.yml`
-ssh chosen_name or login to the browser at 172.27.83.29:80 with username = rstudio,  password = 1234
 ```
 
+To provision software and launch rstudio:
+```
+ansible-playbook -i fce_provisioning/ansible/inventory fce_provisioning/ansible/playbook.yml`
+```
 
+To bring down infrastructure:
+```
+terraform deploy
+```
+
+To ssh:
+
+```
+ssh chosen_name or login to the browser at 172.27.83.29:80 with username = rstudio,  password = 1234
+```
 
 # Guide for one-time setup
 
