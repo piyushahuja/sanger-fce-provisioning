@@ -70,8 +70,43 @@ connection {
 # }
 
 
+}
 
 
+resource "null_resource" "null_provisioner" {
+
+    triggers = {
+      instance_id  = "${openstack_compute_instance_v2.instance_name.id}"
+    }
+
+    connection {
+    user = "ubuntu"
+    private_key = "${file(var.private_key_path)}"
+    host = "${var.floating_ip}"
+  }
+
+
+provisioner "remote-exec" {
+  
+  inline = [
+      "echo"
+  ]
+  on_failure = "fail"
+
+}
+
+provisioner "local-exec" {
+
+    command = "ansible-playbook -i /Users/pa11/Code/fce_provisioning/ansible/inventory /Users/pa11/Code/fce_provisioning/ansible/playbook.yml "
+    on_failure = "fail"    
+}
+
+
+
+
+
+
+  
 }
 resource "openstack_compute_volume_attach_v2" "eta-cellgen-ca6-volume" {
     instance_id = "${openstack_compute_instance_v2.instance_name.id}"
