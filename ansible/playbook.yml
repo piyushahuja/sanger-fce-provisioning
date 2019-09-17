@@ -49,7 +49,7 @@
     - name: run a docker container
       docker_container:
         name: rstudio
-        image: bioconductor/devel_base2
+        image: mercury/rstudio-clara:v1.0
         state: started
         restart: yes
         env: 

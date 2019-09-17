@@ -20,7 +20,7 @@ ansible-playbook -i fce_provisioning/ansible/inventory fce_provisioning/ansible/
 
 To bring down infrastructure, run the following from the terraform directory:
 ```
-terraform deploy
+terraform destroy
 ```
 
 To ssh:
