@@ -27,6 +27,12 @@ variable "private_key_path" {
   default = "~/.ssh/clara.key"
 }
 
+variable "http_port" {
+  default = 80
+}
+
+
+
 
 
 
@@ -118,8 +124,8 @@ resource "openstack_compute_secgroup_v2" "securitygroup_1" {
     description = "allows ssh and http/https access to ports 80 and 22"
 
     rule {
-        from_port = 80
-        to_port = 80
+        from_port = "${var.http_port}"
+        to_port = "${var.http_port}"
         ip_protocol = "tcp"
         cidr = "0.0.0.0/0"
     }
@@ -142,5 +148,5 @@ resource "openstack_compute_floatingip_associate_v2" "floatingip_name_associate"
 
 
 output "address" {
-   value = "${var.floating_ip}"
+   value = "${var.floating_ip}:${var.http_port}"
 }
