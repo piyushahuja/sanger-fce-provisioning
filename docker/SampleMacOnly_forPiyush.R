@@ -57,7 +57,7 @@ dev.off()
 ##################### 5. Or do differential expression using 
 
 DC_57vsrestFinal<-FindMarkers(SEUmac,ident.1="57",ident.2=c("13","26","52","40","48","30","43","60"),min.pct = 0.1,logfc.threshold = 0.25)
-write.table(DC_57vs13_26,file="/home/rstudio/data/DCnscan_sample.txt",quote=F,sep="\t",col.names=NA)
+write.table(DC_57vs13_26,file="/lustre/scratch117/cellgen/team170/ca6/cellrangerEBdiff/Aggregate/Results/AGG19DC/FindMarkers/DCnscan_sample.txt",quote=F,sep="\t",col.names=NA)
 
 ##QUESTION: this function can be paralellized with library(future) as in the two lines below ran before the function, 
 library(future)
