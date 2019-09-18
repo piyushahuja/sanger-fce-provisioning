@@ -13,7 +13,9 @@ To create infrastructure, run the following command from the terraform directory
 terraform apply
 ```
 
-To provision software and launch rstudio, run the following command:
+This should make rstudio available on the browser at the given ip address and port address (172.27.83.29:80), username: rstudio and password: 1234.
+
+If there is an error in provisioning or rstudio does not seem to be running, run the following command and take not of the logs:
 ```
 ansible-playbook -i fce_provisioning/ansible/inventory fce_provisioning/ansible/playbook.yml`
 ```
@@ -26,7 +28,7 @@ terraform destroy
 To ssh:
 
 ```
-ssh chosen_name or login to the browser at 172.27.83.29:80 with username = rstudio,  password = 1234
+ssh chosen_name 
 ```
 
 # Guide for one-time setup
