@@ -2,12 +2,12 @@
 
 
 
-- hosts: clara
+- hosts: claras
   remote_user: ubuntu
   become: yes
   become_method: sudo
   vars:
-    container_image: "mercury/rstudio-clara:v1.0" 
+    container_image: "mercury/rstudio-clara:2.0" 
     rstudio_password: "1234"
     rstudio_port: "80"
   tasks:

@@ -13,10 +13,10 @@ WORKDIR /
 # COPY requirements file 
 COPY install.R .
 # RUN export R_LIBS ='/app/Rlib'
-RUN apt update && apt-get install libhdf5-dev -y
-RUN apt-get install software-properties-common -y
-RUN apt-get update && sudo apt-get install gfortran libudunits2-dev libgdal-dev libgeos-dev libproj-dev -y
 
+RUN apt update && apt-get install libhdf5-dev -y
+RUN sudo apt-get install software-properties-common -y && sudo add-apt-repository ppa:ubuntugis/ubuntugis-unstable -y
+RUN sudo apt-get update && sudo apt-get install gfortran libudunits2-dev libgdal-dev libgeos-dev libproj-dev -y
 RUN Rscript install.R
 # Install Miniconda
 # RUN wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh

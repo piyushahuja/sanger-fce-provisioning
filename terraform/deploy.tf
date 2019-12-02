@@ -16,11 +16,11 @@ variable "openstack_tenant_network" {
 }
 
 variable "floating_ip" {
-  default = "172.27.83.29"
+  default = "172.27.83.155"
 }
 
 variable "volume_id" {
-  default = "bbc0daa2-897f-448e-95d0-e3fb16a388be"
+  default = "db734b93-7ed5-4a64-b752-72e7386f4165"
 }
 
 variable "private_key_path" {
@@ -37,9 +37,9 @@ variable "http_port" {
 
 
 resource "openstack_compute_instance_v2" "instance_name" {
-  name = "eta-cellgen-ca6"
+  name = "eta-cellgen-ca6-test"
   image_name = "bionic-WTSI-docker_b5612"
-  flavor_name = "m1.2xlarge"
+  flavor_name = "m1.xlarge"
   key_pair = "${var.openstack_key_pair}"
   security_groups = ["${openstack_compute_secgroup_v2.securitygroup_1.name}"]
   network {
@@ -47,13 +47,6 @@ resource "openstack_compute_instance_v2" "instance_name" {
 
   }
 
-  depends_on = [openstack_compute_secgroup_v2.securitygroup_1]
-
-connection {
-    user = "ubuntu"
-    private_key = "${file(var.private_key_path)}"
-    host = "${self.access_ip_v4}"
-  }
 
 }
 
@@ -80,20 +73,22 @@ resource "null_resource" "null_provisioner" {
   }
 
   provisioner "local-exec" {
-    command = "ansible-playbook -i ../ansible/inventory ../ansible/playbook.yml "
+    working_dir = "../ansible"
+    command = "ansible-playbook -i inventory playbook.yml "
     on_failure = "continue"    
+    #mTips from https://jite.eu/2018/7/16/terraform-and-ansible/ : use -i ${self.ipv4_address}. I would recommend that you in either the ansible script or a local-exec provisioner clause remove and then add the server host keys, that way you will not have to manually tell the script that you accept the host keys, and you can make sure that the ansible tasks don’t fail because the host is wrong 
   }
 
 }
 
 
-resource "openstack_compute_volume_attach_v2" "eta-cellgen-ca6-volume" {
+resource "openstack_compute_volume_attach_v2" "eta-cellgen-ca6-volume-test" {
     instance_id = "${openstack_compute_instance_v2.instance_name.id}"
     volume_id = "${var.volume_id}"   
  }
 
 resource "openstack_compute_secgroup_v2" "securitygroup_1" {
-    name = "security_group_ca6"
+    name = "security_group_ca6_test"
     description = "allows ssh and http/https access to ports 80 and 22"
 
     rule {
@@ -120,4 +115,5 @@ resource "openstack_compute_floatingip_associate_v2" "floatingip_name_associate"
 
 output "address" {
    value = "${var.floating_ip}:${var.http_port}"
+
 }
