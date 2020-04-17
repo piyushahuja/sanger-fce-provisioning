@@ -16,7 +16,9 @@ if (!requireNamespace("BiocManager", quietly = TRUE))
   'S4Vectors',
   'SingleCellExperiment',
   'SummarizedExperiment',
-  'batchelor')
+  'batchelor',
+  'pROC',
+  'caret')
 
 ap.db <- available.packages(contrib.url(BiocManager::repositories()))
 ap <- rownames(ap.db)
@@ -38,6 +40,9 @@ suppressWarnings(BiocManager::install(update=TRUE, ask=FALSE))
 install.packages("devtools")
 devtools::install_github('cole-trapnell-lab/leidenbase')
 devtools::install_github('cole-trapnell-lab/monocle3')
+devtools::install_github('RGLab/MAST')
+
+
 
 # remotes::install_github("vqv/ggbiplot",
 #     upgrade = 'never', force = TRUE, quiet = TRUE)
